@@ -1,21 +1,28 @@
 import React, { useState, useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { GlobalContext } from "../context/GlobalState";
+import Localbase from "localbase";
 
 export const AddTransactionForm = () => {
+  let db = new Localbase("expenses");
+
   const { addTransaction } = useContext(GlobalContext);
 
   const [text, setText] = useState("");
   const [amount, setAmount] = useState("");
   const generateID = () => {
-    return Math.floor(Math.random() * 100000000);
+    return uuidv4();
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const newTransaction = {
       id: generateID(),
       text,
       amount: +amount,
+      date: Date.now(),
     };
+    db.collection("expenses").add(newTransaction);
     addTransaction(newTransaction);
     setText("");
     setAmount("");
@@ -48,7 +55,9 @@ export const AddTransactionForm = () => {
             placeholder="Enter amount..."
           />
         </div>
-        <button className="btn">Add transaction</button>
+        <button className="btn" type="submit">
+          Add transaction
+        </button>
       </form>
     </>
   );

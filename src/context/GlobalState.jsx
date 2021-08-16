@@ -1,14 +1,25 @@
 import React, { createContext, useReducer } from "react";
 import Appreducer from "./Appreducer.jsx";
+import Localbase from "localbase";
 
 // Initial State
-const ltransactions = localStorage.getItem("expenses"); // to remove
+
+export async function getExpenses() {
+  try {
+    const db = new Localbase("expenses");
+    let expenses = await db.collection("expenses").orderBy("date").get();
+    return expenses;
+  } catch (err) {
+    console.error("error: ", err);
+    return [];
+  }
+}
+
 const initialState = {
-  transactions: ltransactions == null ? [] : ltransactions, // to remove
+  transactions: [],
 };
 
 // Create context
-
 export const GlobalContext = createContext(initialState);
 
 // Provider component

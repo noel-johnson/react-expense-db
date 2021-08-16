@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TransactionItem } from "./TransactionItem";
 
-import { GlobalContext } from "../context/GlobalState";
+import { GlobalContext, getExpenses } from "../context/GlobalState";
 
 export const TransactionList = () => {
-  const { transactions } = useContext(GlobalContext);
-  console.log(transactions);
+  const { transactions, addTransaction } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getExpenses().then((expenses) => {
+      expenses.map((expense) => addTransaction(expense));
+    });
+  }, []);
   return (
     <>
       {transactions.length < 1 ? (

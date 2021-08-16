@@ -1,8 +1,14 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
+import Localbase from "localbase";
 
 export const TransactionItem = ({ text, amount, id }) => {
   const { deleteTransaction } = useContext(GlobalContext);
+  const onClickHandler = (id) => {
+    const db = new Localbase("expenses");
+    db.collection("expenses").doc({ id: id }).delete();
+    deleteTransaction(id);
+  };
 
   const sign = amount < 0 ? "-" : "+";
   return (
@@ -12,7 +18,7 @@ export const TransactionItem = ({ text, amount, id }) => {
         <span>
           {sign}${Math.abs(amount)}
         </span>
-        <button className="delete-btn" onClick={() => deleteTransaction(id)}>
+        <button className="delete-btn" onClick={() => onClickHandler(id)}>
           x
         </button>
       </li>
