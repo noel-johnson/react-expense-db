@@ -1,12 +1,11 @@
 import React, { createContext, useReducer } from "react";
 import Appreducer from "./Appreducer.jsx";
-import Localbase from "localbase";
+import db from "../db/localbase";
 
 // Initial State
 
 export async function getExpenses() {
   try {
-    const db = new Localbase("expenses");
     let expenses = await db.collection("expenses").orderBy("date").get();
     return expenses;
   } catch (err) {

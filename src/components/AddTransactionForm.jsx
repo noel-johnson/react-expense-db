@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { GlobalContext } from "../context/GlobalState";
-import Localbase from "localbase";
+import db from "../db/localbase";
 
 export const AddTransactionForm = () => {
-  let db = new Localbase("expenses");
-
   const { addTransaction } = useContext(GlobalContext);
 
   const [text, setText] = useState("");

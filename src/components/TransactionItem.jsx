@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import Localbase from "localbase";
+import db from "../db/localbase";
 
 export const TransactionItem = ({ text, amount, id }) => {
   const { deleteTransaction } = useContext(GlobalContext);
   const onClickHandler = (id) => {
-    const db = new Localbase("expenses");
     db.collection("expenses").doc({ id: id }).delete();
     deleteTransaction(id);
   };
