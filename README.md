@@ -4,6 +4,8 @@ Just an expenses tracker with offline persistance using indexeddb(localbase).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+[Live link](https://nreact-expense-tracker.netlify.app/)
+
 ## Available Scripts
 
 In the project directory, you can run:
